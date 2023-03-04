@@ -2,10 +2,10 @@
 **Zeshun Peng**, Yanfeng Zhang, Qian Xu, Haixu Liu, Yuxiao Gao, Xiaohua Li, Ge Yu
 # Download
 ```sh
-git clone https://github.com/neubigdatateam/neublockchain.git
+git clone https://github.com/iDC-NEU/NeuChain.git
 ```
 ## Branch description
-* baseline_ev branch: our system
+* ev branch: our system
 * eov branch: the eov variation
 * oe branch: the oe variation
 * oepv branch: the oepv version
@@ -18,8 +18,8 @@ You may need to change the CMakeLists.txt to build the binaries.
 # in home folder
 sudo apt update;
 sudo apt install -y unzip;
-unzip -q neublockchain.zip;
-cd neublockchain/;
+unzip -q NeuChain.zip;
+cd NeuChain/;
 sudo sh ./install_deps.sh;
 ```
 Dependency installation scripts are optimized for docker.
@@ -42,14 +42,14 @@ cmake --build build --target user -j$(nproc)
 We recommend using the following tools for a quick deployment.
 You can use the following methods to manually compile the installation package, or download the package through the following link.
 ```sh
-wget https://github.com/sydxsty/fabric_distributed_deployer/releases/download/v1.1/release_0.30_v5.zip
+wget https://github.com/iDC-NEU/neuchain_deployer/releases/download/v1.1/release_0.30_v5.zip
 ```
 
 ## 1. build the binary of the deployer
 ```sh
 # in home folder
-git clone https://github.com/sydxsty/fabric_distributed_deployer.git
-cd fabric_distributed_deployer/
+git clone https://github.com/iDC-NEU/neuchain_deployer.git
+cd neuchain_deployer/
 cmake -B build -D CMAKE_BUILD_TYPE=Release
 cmake --build build --target block_server_test_comm -j$(nproc)
 cmake --build build --target protobuf -j$(nproc)
@@ -62,17 +62,17 @@ cmake --build build --target deliver_client -j$(nproc)
 ```sh
 # in home folder
 mkdir -p "neuchain_release/bin/crypto"
-cp fabric_distributed_deployer/build/aria_deliver_server ./neuchain_release/
-cp fabric_distributed_deployer/build/deliver_client ./neuchain_release/
-cp neublockchain/build/src/block_server/block_server_test_comm ./neuchain_release/bin/
-cp neublockchain/build/src/epoch_server/epoch_server ./neuchain_release/bin/
-cp neublockchain/build/src/user/user ./neuchain_release/bin/
+cp neuchain_deployer/build/aria_deliver_server ./neuchain_release/
+cp neuchain_deployer/build/deliver_client ./neuchain_release/
+cp NeuChain/build/src/block_server/block_server_test_comm ./neuchain_release/bin/
+cp NeuChain/build/src/epoch_server/epoch_server ./neuchain_release/bin/
+cp NeuChain/build/src/user/user ./neuchain_release/bin/
 ```
 * This is a 4 server cluster config.yaml example for **the deployer**
 **Please do not confuse with NeuChain's configuration.**
 ```sh
-cp neublockchain/doc/4_servers_example.yaml ./neuchain_release/config.yaml
-cp neublockchain/doc/install.sh ./neuchain_release/install.sh
+cp NeuChain/doc/4_servers_example.yaml ./neuchain_release/config.yaml
+cp NeuChain/doc/install.sh ./neuchain_release/install.sh
 chmod +x ./neuchain_release/install.sh
 ```
 * Copy all dynamic libraries to the so folder
@@ -85,9 +85,9 @@ cp /usr/local/lib/*.so neuchain_release/so/
 * Copy **NeuChain's configuration** to bin folder.
 ```sh
 # in home folder
-cp neublockchain/doc/config_template_4_servers.yaml ./neuchain_release/bin/config-template.yaml
-cp neublockchain/doc/config_template_local.yaml ./neuchain_release/bin/config_local.yaml
-cp neublockchain/doc/init_crypto.yaml ./neuchain_release/bin/config_crypto.yaml
+cp NeuChain/doc/config_template_4_servers.yaml ./neuchain_release/bin/config-template.yaml
+cp NeuChain/doc/config_template_local.yaml ./neuchain_release/bin/config_local.yaml
+cp NeuChain/doc/init_crypto.yaml ./neuchain_release/bin/config_crypto.yaml
 ```
 ## 2.2 Init the database
 * Uncomment line [48-49 in src/block_server/server.cpp](src/block_server/server.cpp) to initialize the database.
@@ -98,11 +98,11 @@ cp neublockchain/doc/init_crypto.yaml ./neuchain_release/bin/config_crypto.yaml
 # Modify src/block_server/server.cpp
 cat src/block_server/server.cpp
 # Recompile block_server_test_comm
-cd neublockchain
+cd NeuChain
 cmake --build build --target block_server_test_comm -j$(nproc)
 cd ..
 # copy binary
-cp neublockchain/build/src/block_server/block_server_test_comm ./neuchain_release/bin/db_init
+cp NeuChain/build/src/block_server/block_server_test_comm ./neuchain_release/bin/db_init
 cd ./neuchain_release/bin/
 # in home/neuchain_release/bin/ folder
 cp config_local.yaml config.yaml  # use local config to init db
