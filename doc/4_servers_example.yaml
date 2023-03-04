@@ -1,0 +1,78 @@
+# this is the config file for deliver_client
+
+replacement_dict:
+  ${block_server_0_ip}: 47.109.45.186
+  ${block_server_1_ip}: 114.55.175.56
+  ${block_server_2_ip}: 47.106.86.69
+  ${block_server_3_ip}: 39.103.168.172
+
+  # also change the code when change epoch server count.
+  ${epoch_server_0_ip}: 47.108.169.110
+  ${epoch_server_1_ip}: 121.199.43.152
+  ${epoch_server_2_ip}: 120.77.27.28
+  ${epoch_server_3_ip}: 39.103.187.109
+  ${user_ip}: 127.0.0.1
+
+  # cc type smallbank or ycsb
+  ${cc_type}: small_bank
+  # use YCSB-A (only useful for YCSB workload), see ./bin/config-template.yaml for detail
+  cc_config_a: cc_config
+  # only useful for YCSB-D workload, see ./bin/config-template.yaml for detail
+  ${read_proportion}: 1.00
+  ${update_proportion}: 0.00
+  ${zipfian_const}: 0.99
+
+  ${aggregation_enable_flag}: false
+  ${aggregation_block_server_0_ip}: ${block_server_0_ip}
+  ${aggregation_block_server_1_ip}: ${block_server_1_ip}
+
+  ${async_block_gen}: true
+  ${early_execution}: false
+  ${early_return}: true
+  ${tr_manager_reuse_abort_transaction}: false
+  ${tr_manager_show_categorize_detail}: true
+  ${block_server_up_command}: cd bin; rm -rf ycsb; rm -rf small_bank; rm -rf raft_data*; cp -r ycsb_bk ycsb; cp -r small_bank_bk small_bank; ./block_server_test_comm
+  # duration==1 means the timeout is the consensus time (50-100ms)(in geo deployment)
+  # duration==50 means the timeout is the consensus time + 50ms (in local deployment)
+  # other params are useless for EV arch.
+  ${epoch_server_up_command}: cd bin; rm -rf raft_data*; ./epoch_server --block_size 50 --raft_port 8100 --receiver_port 9002 --broadcaster_port 9003 --batch_size 100 --duration 1
+  # ./user -b <thread count=60> <send tps per thread=1000(not accurate)> <benchmark time=30 or 60>
+  ${client_up_command}: sleep 20; cd bin; ./user -b 60 1000 60
+
+servers:
+  - ip: ${block_server_0_ip}
+    up_command: ${block_server_up_command}
+    extra_replacement_dict:
+      ${local_server_ip}: ${block_server_0_ip}
+  - ip: ${block_server_1_ip}
+    up_command: ${block_server_up_command}
+    extra_replacement_dict:
+      ${local_server_ip}: ${block_server_1_ip}
+  - ip: ${block_server_2_ip}
+    up_command: ${block_server_up_command}
+    extra_replacement_dict:
+      ${local_server_ip}: ${block_server_2_ip}
+  - ip: ${block_server_3_ip}
+    up_command: ${block_server_up_command}
+    extra_replacement_dict:
+      ${local_server_ip}: ${block_server_3_ip}
+  - ip: ${epoch_server_0_ip}
+    up_command: ${epoch_server_up_command}
+    extra_replacement_dict:
+      ${local_server_ip}: ${epoch_server_0_ip}
+  - ip: ${epoch_server_1_ip}
+    up_command: ${epoch_server_up_command}
+    extra_replacement_dict:
+      ${local_server_ip}: ${epoch_server_1_ip}
+  - ip: ${epoch_server_2_ip}
+    up_command: ${epoch_server_up_command}
+    extra_replacement_dict:
+      ${local_server_ip}: ${epoch_server_2_ip}
+  - ip: ${epoch_server_3_ip}
+    up_command: ${epoch_server_up_command}
+    extra_replacement_dict:
+      ${local_server_ip}: ${epoch_server_3_ip}
+#  - ip: ${user_ip}
+#    up_command: ${client_up_command}
+#    extra_replacement_dict:
+#      ${local_server_ip}: ${block_server_0_ip}

@@ -1,0 +1,324 @@
+# this is a config file for 4 servers
+init_crypto: false
+reset_epoch: true
+
+# current server ip
+local_server_ip: ${local_server_ip}
+
+# the servers that will be used
+# this must be private ips for eov and oepv
+server_ips:
+  - ${block_server_0_ip}
+  - ${block_server_1_ip}
+  - ${block_server_2_ip}
+  - ${block_server_3_ip}
+
+# this must be private ips for all block servers
+epoch_ips:
+  - ${epoch_server_0_ip}
+  - ${epoch_server_1_ip}
+  - ${epoch_server_2_ip}
+  - ${epoch_server_3_ip}
+
+#cc_type: ycsb
+#cc_type: small_bank
+#cc_type: test
+cc_type: ${cc_type}
+#cc_test_func_name: calculate
+#cc_test_func_name: time
+cc_test_func_name: ${cc_test_func_name}
+
+# user send invoke tx to all server in server_ips, otherwise send to local_server_ip.
+# crypto helper init all user pri-pub keys
+send_to_all_client_proxy: true
+
+# turn this off can improve performance a little
+tr_manager_show_categorize_detail: ${tr_manager_show_categorize_detail}
+# by turning this off, blk server can recovering fastly from receiving too much aborted tx
+tr_manager_reuse_abort_transaction: ${tr_manager_reuse_abort_transaction}
+
+early_execution: ${early_execution}
+early_return: ${early_return}
+
+async_block_gen: ${async_block_gen}
+
+aggregation:
+  enable: ${aggregation_enable_flag}
+  policy: 0
+  #policy: 5
+  cluster_ips:
+    - ${aggregation_block_server_0_ip}
+    - ${aggregation_block_server_1_ip}
+
+heart_beat_config:
+  table_name: heart_beat_table
+  func_name: empty
+  reads: 0
+  writes: 0
+
+# all of servers info
+# note: path may not be the same
+server_data:
+  ${block_server_0_ip}:
+    public_crt: crypto/server.0.public.key
+    private_crt: crypto/server.0.private.key
+    user_public_crt: crypto/server.0.public.user.key
+    user_private_crt: crypto/server.0.private.user.key
+  ${block_server_1_ip}:
+    public_crt: crypto/server.1.public.key
+    private_crt: crypto/server.1.private.key
+    user_public_crt: crypto/server.1.public.user.key
+    user_private_crt: crypto/server.1.private.user.key
+  ${block_server_2_ip}:
+    public_crt: crypto/server.2.public.key
+    private_crt: crypto/server.2.private.key
+    user_public_crt: crypto/server.2.public.user.key
+    user_private_crt: crypto/server.2.private.user.key
+  ${block_server_3_ip}:
+    public_crt: crypto/server.3.public.key
+    private_crt: crypto/server.3.private.key
+    user_public_crt: crypto/server.3.public.user.key
+    user_private_crt: crypto/server.3.private.user.key
+  ${block_server_4_ip}:
+    public_crt: crypto/server.4.public.key
+    private_crt: crypto/server.4.private.key
+    user_public_crt: crypto/server.4.public.user.key
+    user_private_crt: crypto/server.4.private.user.key
+  ${block_server_5_ip}:
+    public_crt: crypto/server.5.public.key
+    private_crt: crypto/server.5.private.key
+    user_public_crt: crypto/server.5.public.user.key
+    user_private_crt: crypto/server.5.private.user.key
+  ${block_server_6_ip}:
+    public_crt: crypto/server.6.public.key
+    private_crt: crypto/server.6.private.key
+    user_public_crt: crypto/server.6.public.user.key
+    user_private_crt: crypto/server.6.private.user.key
+  ${block_server_7_ip}:
+    public_crt: crypto/server.7.public.key
+    private_crt: crypto/server.7.private.key
+    user_public_crt: crypto/server.7.public.user.key
+    user_private_crt: crypto/server.7.private.user.key
+  ${block_server_8_ip}:
+    public_crt: crypto/server.8.public.key
+    private_crt: crypto/server.8.private.key
+    user_public_crt: crypto/server.8.public.user.key
+    user_private_crt: crypto/server.8.private.user.key
+  ${block_server_9_ip}:
+    public_crt: crypto/server.9.public.key
+    private_crt: crypto/server.9.private.key
+    user_public_crt: crypto/server.9.public.user.key
+    user_private_crt: crypto/server.9.private.user.key
+  ${block_server_10_ip}:
+    public_crt: crypto/server.10.public.key
+    private_crt: crypto/server.10.private.key
+    user_public_crt: crypto/server.10.public.user.key
+    user_private_crt: crypto/server.10.private.user.key
+  ${block_server_11_ip}:
+    public_crt: crypto/server.11.public.key
+    private_crt: crypto/server.11.private.key
+    user_public_crt: crypto/server.11.public.user.key
+    user_private_crt: crypto/server.11.private.user.key
+  ${block_server_12_ip}:
+    public_crt: crypto/server.12.public.key
+    private_crt: crypto/server.12.private.key
+    user_public_crt: crypto/server.12.public.user.key
+    user_private_crt: crypto/server.12.private.user.key
+  ${block_server_13_ip}:
+    public_crt: crypto/server.13.public.key
+    private_crt: crypto/server.13.private.key
+    user_public_crt: crypto/server.13.public.user.key
+    user_private_crt: crypto/server.13.private.user.key
+  ${block_server_14_ip}:
+    public_crt: crypto/server.14.public.key
+    private_crt: crypto/server.14.private.key
+    user_public_crt: crypto/server.14.public.user.key
+    user_private_crt: crypto/server.14.private.user.key
+  ${block_server_15_ip}:
+    public_crt: crypto/server.15.public.key
+    private_crt: crypto/server.15.private.key
+    user_public_crt: crypto/server.15.public.user.key
+    user_private_crt: crypto/server.15.private.user.key
+
+#epoch server cert
+epoch_data:
+  public_crt: crypto/epoch.public.key
+  private_crt: crypto/epoch.private.key
+
+# Yahoo! Cloud System Benchmark
+# Workload A: Update heavy workload
+#   Application example: Session store recording recent actions
+#
+#   Read/update ratio: 50/50
+#   Default data size: 1 KB records (10 fields, 100 bytes each, plus key)
+#   Request distribution: zipfian
+#cc_config:
+cc_config_a:
+  table_name: user_table
+  field_count: 10
+  field_length_distribution: constant
+  #field_length_distribution: uniform
+  #field_length_distribution: zipfian
+  field_length: 100
+  max_scan_len: 1000
+  scan_len_distribution: uniform
+  #scan_len_distribution: zipfian
+  insert_start: 0
+  # this is the shew factor, default: 0.99
+  zipfian_const: 0.99
+  # inserts order default: hashed
+  ordered_inserts: false
+  record_count: 1000000
+  operation_count: 10000
+  read_all_fields: true
+  write_all_fields: false
+  read_proportion: 0.50
+  update_proportion: 0.50
+  insert_proportion: 0.00
+  scan_proportion: 0.00
+  read_modify_write_proportion: 0.0
+  #request_distribution: uniform
+  request_distribution: zipfian
+  #request_distribution: latest
+
+# Yahoo! Cloud System Benchmark
+# Workload B: Read mostly workload
+#   Application example: photo tagging; add a tag is an update, but most operations are to read tags
+#
+#   Read/update ratio: 95/5
+#   Default data size: 1 KB records (10 fields, 100 bytes each, plus key)
+#   Request distribution: zipfian
+#cc_config:
+cc_config_b:
+  table_name: user_table
+  field_count: 10
+  field_length_distribution: constant
+  #field_length_distribution: uniform
+  #field_length_distribution: zipfian
+  field_length: 100
+  max_scan_len: 1000
+  scan_len_distribution: uniform
+  #scan_len_distribution: zipfian
+  insert_start: 0
+  # this is the shew factor, default: 0.99
+  zipfian_const: 0.99
+  # inserts order default: hashed
+  ordered_inserts: false
+  record_count: 1000000
+  operation_count: 10000
+  read_all_fields: true
+  write_all_fields: false
+  read_proportion: 0.95
+  update_proportion: 0.05
+  insert_proportion: 0.00
+  scan_proportion: 0.00
+  read_modify_write_proportion: 0.0
+  #request_distribution: uniform
+  request_distribution: zipfian
+  #request_distribution: latest
+
+# Yahoo! Cloud System Benchmark
+# Workload C: Read only
+#   Application example: user profile cache, where profiles are constructed elsewhere (e.g., Hadoop)
+#
+#   Read/update ratio: 100/0
+#   Default data size: 1 KB records (10 fields, 100 bytes each, plus key)
+#   Request distribution: zipfian
+#cc_config:
+cc_config_c:
+  table_name: user_table
+  field_count: 10
+  field_length_distribution: constant
+  #field_length_distribution: uniform
+  #field_length_distribution: zipfian
+  field_length: 100
+  max_scan_len: 1000
+  scan_len_distribution: uniform
+  #scan_len_distribution: zipfian
+  insert_start: 0
+  # this is the shew factor, default: 0.99
+  zipfian_const: 0.99
+  # inserts order default: hashed
+  ordered_inserts: false
+  record_count: 1000000
+  operation_count: 10000
+  read_all_fields: true
+  write_all_fields: false
+  read_proportion: 1.00
+  update_proportion: 0.00
+  insert_proportion: 0.00
+  scan_proportion: 0.00
+  read_modify_write_proportion: 0.0
+  #request_distribution: uniform
+  request_distribution: zipfian
+  #request_distribution: latest
+
+# Yahoo! Cloud System Benchmark
+# Workload D: Read latest workload
+#   Application example: user status updates; people want to read the latest
+#
+#   Read/update/insert ratio: 95/0/5
+#   Default data size: 1 KB records (10 fields, 100 bytes each, plus key)
+#   Request distribution: latest
+
+# The insert order for this is hashed, not ordered. The "latest" items may be
+# scattered around the keyspace if they are keyed by userid.timestamp. A workload
+# which orders items purely by time, and demands the latest, is very different than
+# workload here (which we believe is more typical of how people build systems.)
+#cc_config:
+cc_config_d:
+  table_name: user_table
+  field_count: 10
+  field_length_distribution: constant
+  #field_length_distribution: uniform
+  #field_length_distribution: zipfian
+  field_length: 100
+  max_scan_len: 1000
+  scan_len_distribution: uniform
+  #scan_len_distribution: zipfian
+  insert_start: 0
+  # this is the shew factor, default: 0.99
+  zipfian_const: 0.99
+  # inserts order default: hashed
+  ordered_inserts: false
+  record_count: 1000000
+  operation_count: 10000
+  read_all_fields: true
+  write_all_fields: false
+  read_proportion: 0.95
+  update_proportion: 0.00
+  insert_proportion: 0.05
+  scan_proportion: 0.00
+  read_modify_write_proportion: 0.0
+  #request_distribution: uniform
+  #request_distribution: zipfian
+  request_distribution: latest
+
+# custom workload
+cc_config_e:
+  table_name: user_table
+  field_count: 10
+  field_length_distribution: constant
+  #field_length_distribution: uniform
+  #field_length_distribution: zipfian
+  field_length: 100
+  max_scan_len: 1000
+  scan_len_distribution: uniform
+  #scan_len_distribution: zipfian
+  insert_start: 0
+  # this is the shew factor, default: 0.99
+  zipfian_const: ${zipfian_const}
+  # inserts order default: hashed
+  ordered_inserts: false
+  record_count: 1000000
+  operation_count: 10000
+  read_all_fields: true
+  write_all_fields: false
+  read_proportion: ${read_proportion}
+  update_proportion: ${update_proportion}
+  insert_proportion: 0.00
+  scan_proportion: 0.00
+  read_modify_write_proportion: 0.0
+  #request_distribution: uniform
+  #request_distribution: zipfian
+  request_distribution: latest

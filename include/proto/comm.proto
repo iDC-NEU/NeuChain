@@ -1,0 +1,72 @@
+//
+// Created by ada on 2021/1/23.
+//
+
+syntax = "proto3";
+package comm;
+
+import "kv_rwset.proto";
+
+message UserRequest {
+  bytes payload = 1;
+  bytes digest = 2;
+}
+
+message UserQueryRequest {
+  bytes type = 1;
+  bytes payload = 2;
+  bytes digest = 3;
+}
+
+message QueryResult {
+  bytes proof = 1;
+  repeated KVRead reads = 2;
+}
+
+message ClientToUserResponse{
+  uint32 err_number = 1;
+}
+
+message EpochRequest{
+  uint32 request_batch_size = 1;
+  bytes batch_hash = 2;
+}
+
+message EpochResponse{
+  uint64 epoch = 1;
+  EpochRequest request = 2;
+  uint64 nonce = 3;
+  bytes signature = 4;
+}
+
+// order is needed for transactions
+message TransactionsWithProof {
+  uint64 epoch = 1;
+  enum Type {
+    TX = 0;
+    CON = 1;
+    HEARTBEAT = 2;
+    MALICIOUS = 3;
+  }
+  Type type = 2;
+  bytes proof = 3;
+  bytes ip = 4;
+  repeated bytes data = 5;
+}
+
+message SignatureExchange {
+  uint64 epoch = 1;
+  bytes ip = 2;
+  bytes signature = 3;
+}
+
+message AggregationExchangeNode {
+  uint64 tid = 1;
+  bytes rwset = 2;
+  uint32 result = 3;
+}
+
+message AggregationExchange {
+  uint64 epoch = 1;
+  repeated AggregationExchangeNode node = 2;
+}
