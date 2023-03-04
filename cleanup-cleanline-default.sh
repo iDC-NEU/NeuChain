@@ -1,0 +1,10 @@
+rm -f cmake-build-release/src/block_server/*.bin
+rm -rf cmake-build-release/src/block_server/ycsb
+rm -rf cmake-build-release/src/block_server/small_bank
+rm -rf cmake-build-release/src/block_server/raft_*
+rm -rf cmake-build-release/src/epoch_server/raft_*
+rm -f cmake-build-debug/src/block_server/*.bin
+rm -rf cmake-build-debug/src/block_server/ycsb
+rm -rf cmake-build-debug/src/block_server/small_bank
+rm -rf cmake-build-debug/src/block_server/raft_*
+rm -rf cmake-build-debug/src/epoch_server/raft_*

@@ -1,0 +1,8 @@
+//
+// Created by peng on 3/20/21.
+//
+
+#ifndef NEUBLOCKCHAIN_EPOCH_SERVER_H
+#define NEUBLOCKCHAIN_EPOCH_SERVER_H
+
+#endif //NEUBLOCKCHAIN_EPOCH_SERVER_H

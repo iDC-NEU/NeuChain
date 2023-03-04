@@ -1,0 +1,14 @@
+
+syntax = "proto3";
+
+message DB_TEST_WAREHOUSE {
+  uint64 W_ID = 1;        // Primary Key: W_ID  num = W, Warehouses are populated
+  string W_NAME = 2;      // variable text, size 10
+  string W_STREET_1 = 3;  // variable text, size 20
+  string W_STREET_2 = 4;  // variable text, size 20
+  string W_CITY = 5;      // variable text, size 20
+  string W_STATE = 6;     // fixed  text, size 2
+  string W_ZIP = 7;       // fixed  text, size 9
+  double W_TAX = 8;       // signed numeric (4,4)   Sales tax
+  double W_YTD = 9;       // signed numeric (12,2)  Year to date balance
+}
