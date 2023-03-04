@@ -1,0 +1,146 @@
+//http://tpc.org/tpc_documents_current_versions/pdf/tpc-c_v5.11.0.pdf
+
+syntax = "proto3";
+
+message WAREHOUSE {
+  uint64 W_ID = 1;        // Primary Key: W_ID  num = W, Warehouses are populated
+  string W_NAME = 2;      // variable text, size 10
+  string W_STREET_1 = 3;  // variable text, size 20
+  string W_STREET_2 = 4;  // variable text, size 20
+  string W_CITY = 5;      // variable text, size 20
+  string W_STATE = 6;     // fixed  text, size 2
+  string W_ZIP = 7;       // fixed  text, size 9
+  double W_TAX = 8;       // signed numeric (4,4)   Sales tax
+  double W_YTD = 9;       // signed numeric (12,2)  Year to date balance
+}
+
+message DISTRICT {
+  uint32 D_ID = 1;        // 20 unique IDs 10 are populated per warehouse
+  uint64 D_W_ID = 2;      // D_W_ID Foreign Key, references W_ID  Primary Key: (D_W_ID, D_ID)
+  string D_NAME = 3;      // variable text, size 10
+  string D_STREET_1 = 4;  // variable text, size 20
+  string D_STREET_2 = 5;  // variable text, size 20
+  string D_CITY = 6;      // variable text, size 20
+  string D_STATE = 7;     // fixed  text, size 2
+  string D_ZIP = 8;       // fixed  text, size 9
+  double D_TAX = 9;       // signed numeric (4,4)   Sales tax
+  double D_YTD = 10;      // signed numeric (12,2)  Year to date balance
+  uint64 D_NEXT_O_ID = 100; //10,000,000 unique IDs Next available Order number
+}
+
+// 1. Primary Key: (C_W_ID, C_D_ID, C_ID)
+// 2. (C_W_ID, C_D_ID) Foreign Key, references (D_W_ID, D_ID)
+message CUSTOMER {
+  uint64 C_ID = 1;        // 96,000 unique IDs 3,000 are populated per district
+  uint32 C_D_ID = 2;      // 20 unique IDs
+  uint64 C_W_ID = 3;      // 2*W unique IDs
+  string C_FIRST = 4;     // variable text, size 16
+  string C_MIDDLE = 5;    // fixed  text, size 2
+  string C_LAST = 6;      // variable text, size 16
+  string C_STREET_1 = 7;  // variable text, size 20
+  string C_STREET_2 = 8;  // variable text, size 20
+  string C_CITY = 9;      // variable text, size 20
+  string C_STATE = 10;    // fixed  text, size 2
+  string C_ZIP = 11;      // fixed  text, size 9
+  string C_PHONE = 12;    // variable text, size 16
+  uint64 C_SINCE = 13;    // date and time
+  string C_CREDIT = 14;   // fixed text, size 2 "GC"=good, "BC"=bad
+  double C_CREDIT_LIM = 15;   // signed numeric (12,2)
+  double C_DISCOUNT = 16;     // signed numeric (4,4)
+  double C_BALANCE = 17;      // signed numeric (12,2)
+  double C_YTD_PAYMENT = 18;  // signed numeric (12,2)  //year till date payment
+  double C_PAYMENT_CNT = 19;  // numeric(4)
+  double C_DELIVERY_CNT = 20; // numeric(4)
+  string C_DATA = 21;         // variable text, size 500 Miscellaneous information
+}
+
+// Primary Key: none
+// (H_C_W_ID, H_C_D_ID, H _C_ID) Foreign  Key, references (C_W_ID, C_D_ID, C_ID)
+// (H_W_ID, H _D_ID) Foreign  Key, references (D_W_ID, D_ID)
+// Comment: Rows in the History table  do not  have a primary key as, with in the context of the benchmark,
+// there is no need to uniquely identify a row within  this table.
+// Note: The TPC-C application  does not have to be capable of utilizing the in creased range of C_ID values beyond  6,000.
+message HISTORY {
+  uint64 H_C_ID = 1;        // 96,000 unique IDs 3,000 are populated per district
+  uint32 H_C_D_ID = 2;      // 20 unique IDs
+  uint64 H_C_W_ID = 3;      // 2*W unique IDs
+  uint64 H_D_ID = 4;        // 20 unique IDs 10 are populated per warehouse
+  uint64 H_W_ID = 5;        // 2*W, Warehouses are populated
+  uint64 H_DATE = 6;        // date and time
+  double H_AMOUNT = 7;      // signed numeric (6, 2)
+  string H_DATA = 8;        // variable text, size 24, Miscellaneous information
+}
+
+// Primary Key: (NO_W_ID, NO_D_ID, NO_O_ID)
+// (NO_W_ID, NO_D_ID, NO_O_ID) Foreign Key, references (O_W_ID, O_D_ID, O_ID)
+message NEW_ORDER {
+  uint64 NO_O_ID = 1;
+  uint32 NO_D_ID = 2;
+  uint64 NO_W_ID = 3;
+}
+
+// Primary Key: (O_W_ID, O_D_ID, O_ID)
+// (O_W_ID, O_D_ID, O_C_ID) Foreign Key, references (C_W_ID, C_D_ID, C_ID)
+message ORDER {
+  uint64 O_ID = 1;
+  uint32 O_D_ID = 2;
+  uint64 O_W_ID = 3;
+  uint64 O_C_ID = 4;
+  uint64 O_ENTRY_D = 5;   // date and time
+  uint32 O_CARRIER_ID = 6;
+  uint32 O_OL_CNT = 7;    // Count of Order-Lines
+  uint32 O_ALL_LOCAL = 8;
+}
+
+// Primary Key: (OL_W_ID, OL_D_ID, OL_O_ID, OL_NUMBER)
+// (OL_W_ID, OL_D_ID, OL_O_ID) Foreign Key, references (O_W_ID, O_D_ID, O_ID)
+// (OL_SUPPLY_W_ID, OL_I_ID) Foreign  Key, references (S_W_ID, S_I_ID)
+message ORDER_LINE {
+  uint64 OL_O_ID = 1;
+  uint32 OL_D_ID = 2;
+  uint64 OL_W_ID = 3;
+  uint32 OL_NUMBER = 4;
+  uint64 OL_I_ID = 5;
+  uint64 OL_SUPPLY_W_ID = 6;
+  uint64 OL_DELIVERY_D = 7; // date and time, or nil
+  uint32 OL_QUANTITY = 8;
+  double OL_AMOUNT = 9;
+  string OL_DIST_INFO = 10;
+}
+
+// Primary Key: I_ID
+message ITEM {
+  uint64 I_ID = 1;
+  uint64 I_IM_ID = 2;   // Image ID associated to Item
+  string I_NAME = 3;
+  double I_PRICE = 4;
+  string I_DATA = 5;    // Brand information
+}
+
+// Primary Key: (S_W_ID, S_I_ID)
+// S_W_ID Foreign Key, references W_ID
+// S_I_ID Foreign  Key, references I_ID
+message STOCK {
+  uint64 S_I_ID = 1;    // 100,000 populated per warehouse
+  uint64 S_W_ID = 2;
+  int64 S_QUANTITY = 3;
+  repeated string S_DIST = 4;
+  uint64 S_YTD = 5;
+  uint64 S_ORDER_CNT = 6;
+  uint64 S_REMOTE_CNT = 7;
+  string S_DATA = 8;
+}
+
+message YCSB_PAYLOAD {
+  repeated bytes reads = 1;
+  repeated bytes update = 2;
+  bytes table = 3;
+}
+
+message YCSB_FOR_BLOCK_BENCH {
+  message YCSB_FOR_BLOCK_BENCH_PAIR {
+    bytes key = 1;
+    bytes value = 2;
+  }
+  repeated YCSB_FOR_BLOCK_BENCH_PAIR values = 1;
+}

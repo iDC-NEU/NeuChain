@@ -1,0 +1,15 @@
+syntax = "proto3";
+package eov;
+
+message EOVBlock {
+  repeated bytes user_request = 1;
+  uint64 epoch = 2;
+  bytes signature = 3;
+}
+
+message TimeoutSignal {
+  uint64 epoch = 1;
+  bytes ip = 2;
+  uint64 nonce = 3;
+  bytes signature = 4;
+}
