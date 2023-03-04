@@ -1,0 +1,21 @@
+syntax = "proto2";
+package raft;
+option cc_generic_services = true;
+
+message PushRequest {
+  optional int64 id = 1;   // id is useless here
+  repeated bytes user_request = 2;
+};
+
+message ChainResponse {
+  optional int64 id = 1;   // id is useless here
+  required bool success = 2;
+};
+
+service ChainService {
+  rpc push(PushRequest) returns (ChainResponse);
+};
+
+message IncreaseEpochRequest {
+  required uint64 expect_epoch = 1;
+}
