@@ -1,5 +1,5 @@
 # NeuChain: A Fast Permissioned Blockchain System with Deterministic Ordering
-**Zeshun Peng**, Yanfeng Zhang, Qian Xu, Haixu Liu, Yuxiao Gao, Xiaohua Li, Ge Yu
+Peng, Zeshun, Yanfeng Zhang, Qian Xu, Haixu Liu, Yuxiao Gao, Xiaohua Li, and Ge Yu. "NeuChain: a fast permissioned blockchain system with deterministic ordering." Proceedings of the VLDB Endowment 15, no. 11 (2022): 2585-2598.
 # Download
 ```sh
 git clone https://github.com/iDC-NEU/NeuChain.git
