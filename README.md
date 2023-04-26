@@ -52,7 +52,6 @@ wget https://github.com/iDC-NEU/neuchain_deployer/releases/download/v1.1/release
 git clone https://github.com/iDC-NEU/neuchain_deployer.git
 cd neuchain_deployer/
 cmake -B build -D CMAKE_BUILD_TYPE=Release
-cmake --build build --target block_server_test_comm -j$(nproc)
 cmake --build build --target protobuf -j$(nproc)
 # build the server, each server is on a separate machine.
 cmake --build build --target aria_deliver_server -j$(nproc)
